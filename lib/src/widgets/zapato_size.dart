@@ -1,26 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:shoes_app/src/pages/pages.dart';
 
 class ZapatoSizePreview extends StatelessWidget {
-  const ZapatoSizePreview({super.key});
+  final bool fullScreen;
+  const ZapatoSizePreview({super.key, this.fullScreen = false});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-      child: Container(
-        width: double.infinity,
-        height: 430,
-        decoration: BoxDecoration(
-          color: Color(0xffFFCF53),
-          borderRadius: BorderRadius.circular(50),
+    return GestureDetector(
+      onTap: () {
+        if (!fullScreen) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ZapatoDescPage()),
+          );
+        }
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: (fullScreen) ? 5 : 30,
+          vertical: (fullScreen) ? 0 : 30,
         ),
-        child: Column(
-          children: [
-            // Zapato con su sombra
-            _ZapatoConSombra(),
-            // Tallas
-            _ZapatosTallas(),
-          ],
+        child: Container(
+          width: double.infinity,
+          height: (fullScreen) ? 410 : 430,
+          decoration: BoxDecoration(
+            color: Color(0xffFFCF53),
+            borderRadius: (!fullScreen)
+                ? BorderRadius.circular(50)
+                : BorderRadius.only(
+                    bottomLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(50),
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+          ),
+          child: Column(
+            children: [
+              // Zapato con su sombra
+              _ZapatoConSombra(),
+              // Tallas
+              if (!fullScreen) _ZapatosTallas(),
+            ],
+          ),
         ),
       ),
     );
