@@ -84,14 +84,16 @@ class _TallaZapatoCaja extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.read<ZapatoModel>().talla = numero ;
+        context.read<ZapatoModel>().talla = numero;
       },
       child: Container(
         alignment: Alignment.center,
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: (numero == zapatoModel.talla) ? Color(0xffF1A23A) : Colors.white,
+          color: (numero == zapatoModel.talla)
+              ? Color(0xffF1A23A)
+              : Colors.white,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             if (numero == zapatoModel.talla)
@@ -105,7 +107,9 @@ class _TallaZapatoCaja extends StatelessWidget {
         child: Text(
           numero.toString().replaceAll('.0', ''),
           style: TextStyle(
-            color: (numero == zapatoModel.talla) ? Colors.white : Color(0xffF1A23A),
+            color: (numero == zapatoModel.talla)
+                ? Colors.white
+                : Color(0xffF1A23A),
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -120,12 +124,14 @@ class _ZapatoConSombra extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final zapatoModel = context.watch<ZapatoModel>();
+
     return Padding(
       padding: const EdgeInsets.all(50),
       child: Stack(
         children: [
           Positioned(bottom: 10, right: 0, child: _ZapatoSombra()),
-          Image.asset('assets/imgs/amarillo.png'),
+          Image.asset(zapatoModel.assetImage),
         ],
       ),
     );

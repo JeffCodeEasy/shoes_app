@@ -1,5 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoes_app/src/helpers/helpers.dart';
+import 'package:shoes_app/src/models/zapato_model.dart';
 import 'package:shoes_app/src/widgets/widgets.dart';
 
 class ZapatoDescPage extends StatelessWidget {
@@ -20,6 +23,8 @@ class ZapatoDescPage extends StatelessWidget {
                   elevation: 0,
                   highlightElevation: 0,
                   onPressed: () {
+                    cambiarStatusDark();
+
                     Navigator.pop(context);
                   },
                   child: Icon(
@@ -119,10 +124,31 @@ class _ColoresYmas extends StatelessWidget {
           Expanded(
             child: Stack(
               children: [
-                Positioned(left: 90, child: _BotonColor(Color(0xffC6D642), 4)),
-                Positioned(left: 60, child: _BotonColor(Color(0xffFFAD29), 3)),
-                Positioned(left: 30, child: _BotonColor(Color(0xff2099F1), 2)),
-                _BotonColor(Color(0xff364D56), 1),
+                Positioned(
+                  left: 90,
+                  child: _BotonColor(
+                    Color(0xffC6D642),
+                    4,
+                    'assets/imgs/verde.png',
+                  ),
+                ),
+                Positioned(
+                  left: 60,
+                  child: _BotonColor(
+                    Color(0xffFFAD29),
+                    3,
+                    'assets/imgs/amarillo.png',
+                  ),
+                ),
+                Positioned(
+                  left: 30,
+                  child: _BotonColor(
+                    Color(0xff2099F1),
+                    2,
+                    'assets/imgs/azul.png',
+                  ),
+                ),
+                _BotonColor(Color(0xff364D56), 1, 'assets/imgs/negro.png'),
               ],
             ),
           ),
@@ -143,18 +169,22 @@ class _ColoresYmas extends StatelessWidget {
 class _BotonColor extends StatelessWidget {
   final Color color;
   final int index;
+  final String urlImagen;
 
-  const _BotonColor(this.color, this.index);
+  const _BotonColor(this.color, this.index, this.urlImagen);
 
   @override
   Widget build(BuildContext context) {
     return FadeInLeft(
       delay: Duration(milliseconds: index * 100),
       duration: Duration(milliseconds: 300),
-      child: Container(
-        width: 45,
-        height: 45,
-        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      child: GestureDetector(
+        onTap: () => context.read<ZapatoModel>().assetImage = urlImagen,
+        child: Container(
+          width: 45,
+          height: 45,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
       ),
     );
   }
