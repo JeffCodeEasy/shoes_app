@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoes_app/src/models/zapato_model.dart';
 import 'package:shoes_app/src/pages/pages.dart';
 
 class ZapatoSizePreview extends StatelessWidget {
@@ -78,28 +80,35 @@ class _TallaZapatoCaja extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        color: (numero == 9) ? Color(0xffF1A23A) : Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          if (numero == 9)
-            BoxShadow(
-              color: Color(0xffF1A23A),
-              blurRadius: 10,
-              offset: Offset(0, 5),
-            ),
-        ],
-      ),
-      child: Text(
-        numero.toString().replaceAll('.0', ''),
-        style: TextStyle(
-          color: (numero == 9) ? Colors.white : Color(0xffF1A23A),
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
+    final zapatoModel = context.watch<ZapatoModel>();
+
+    return GestureDetector(
+      onTap: () {
+        context.read<ZapatoModel>().talla = numero ;
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: (numero == zapatoModel.talla) ? Color(0xffF1A23A) : Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            if (numero == zapatoModel.talla)
+              BoxShadow(
+                color: Color(0xffF1A23A),
+                blurRadius: 10,
+                offset: Offset(0, 5),
+              ),
+          ],
+        ),
+        child: Text(
+          numero.toString().replaceAll('.0', ''),
+          style: TextStyle(
+            color: (numero == zapatoModel.talla) ? Colors.white : Color(0xffF1A23A),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
